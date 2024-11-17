@@ -1,15 +1,16 @@
-import UserInfo from './UserInfo';
+import React, { useContext } from 'react';
 import UserContext from './UserContext';
 
-function ProfilePage() {
+function UserProfile() {
+  const { name, age, bio } = useContext(UserContext);
+
   return (
-    <UserContext.Consumer>
-      {(userData) => (
-        <UserInfo userData={userData} />
-      )}
-    </UserContext.Consumer>
+    <div>
+      <h2>{name}</h2>
+      <p>Age: {age}</p>
+      <p>Bio: {bio}</p>
+    </div>
   );
 }
 
 export default ProfilePage;
-
