@@ -1,26 +1,39 @@
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
-    // State for form data
+    // State for form inputs
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     // State for error messages
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState({});
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Basic validation
-        if (!username || !email || !password) {
-            setError("All fields are required");
+        // Validation logic
+        const newErrors = {};
+        if (!username) {
+            newErrors.username = "Username is required.";
+        }
+        if (!email) {
+            newErrors.email = "Email is required."; // Explicit check for email
+        }
+        if (!password) {
+            newErrors.password = "Password is required."; // Explicit check for password
+        }
+
+        // If there are validation errors, update the `errors` state
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors); // Using setErrors to store validation messages
             return;
         }
 
-        setError("");
-        console.log("Form Submitted:", { username, email, password });
+        // If no errors, clear errors and proceed
+        setErrors({});
+        console.log("Form Submitted Successfully:", { username, email, password });
         alert("User Registered Successfully!");
     };
 
@@ -31,35 +44,34 @@ const RegistrationForm = () => {
                     Username:
                     <input
                         type="text"
-                        name="username"
-                        value={username} // Controlled component
+                        value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </label>
+                {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
             </div>
             <div>
                 <label>
                     Email:
                     <input
                         type="email"
-                        name="email"
-                        value={email} // Controlled component
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
+                {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
             </div>
             <div>
                 <label>
                     Password:
                     <input
                         type="password"
-                        name="password"
-                        value={password} // Controlled component
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>
+                {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
             </div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
             <button type="submit">Register</button>
         </form>
     );
