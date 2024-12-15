@@ -2,13 +2,21 @@
 
 import React from 'react';
 import { useQuery } from 'react-query';
-import { fetchPosts } from '../queries/posts'; // Import fetch function from queries
 
 const PostsComponent = () => {
+  // Fetch posts directly using the API endpoint
+  const fetchPosts = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    if (!response.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+    return response.json();
+  };
+
   // Use React Query's useQuery hook to fetch data
   const { data, error, isLoading, isError, refetch } = useQuery('posts', fetchPosts);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading posts...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
