@@ -1,40 +1,60 @@
-// components/Search.jsx
+// src/components/Search.js
+import React, { useState } from "react";
+import { fetchUserData } from "../services/githubService";  // We will create this service next.
 
-import React, { useState } from 'react';
-import axios from 'axios';
+const Search = () => {
+  const [username, setUsername] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-const Search = ({ onSearch }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  // Handle input change
+  const handleInputChange = (e) => {
+    setUsername(e.target.value);
+  };
 
-  const handleSubmit = async (e) => {
+  // Handle form submission
+  const handleSearch = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError('');
+    setLoading(true);
+    setError(null);
+    setUserData(null);
 
     try {
-      const response = await axios.get(`https://api.github.com/users/${inputValue}`);
-      onSearch(response.data);
+      const data = await fetchUserData(username);
+      setUserData(data);
     } catch (err) {
-      setError('Looks like we can\'t find the user');
+      setError("Looks like we can't find the user.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter GitHub username"
-      />
-      <button type="submit">Search</button>
-      {isLoading && <p>Loading...</p>}
+    <div>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search GitHub user"
+          value={username}
+          onChange={handleInputChange}
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-    </form>
+      
+      {userData && (
+        <div>
+          <img src={userData.avatar_url} alt={userData.login} width="100" />
+          <h3>{userData.name}</h3>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
+        </div>
+      )}
+    </div>
   );
 };
 
