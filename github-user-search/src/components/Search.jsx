@@ -1,32 +1,33 @@
 // src/components/Search.jsx
 import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService";  // This imports the fetchUserData function
+import { fetchUserData } from "../services/githubService";  // Import the fetchUserData function
 
 const Search = () => {
-  const [username, setUsername] = useState(""); // State to hold the username input
-  const [userData, setUserData] = useState(null); // State to hold the user data from the API
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const [error, setError] = useState(null); // State to handle errors
+  const [username, setUsername] = useState(""); // State to capture the username input
+  const [userData, setUserData] = useState(null); // State for storing fetched user data
+  const [loading, setLoading] = useState(false); // State for tracking the loading state
+  const [error, setError] = useState(null); // State for error messages
 
-  // Handle input field change
+  // Handle input changes
   const handleInputChange = (e) => {
     setUsername(e.target.value);
   };
 
-  // Handle form submission to trigger API call
+  // Handle form submission to trigger search
   const handleSearch = async (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
-    setLoading(true);     // Set loading state to true when API call starts
-    setError(null);       // Clear any previous error messages
-    setUserData(null);    // Clear any previous user data
+    e.preventDefault();
+    setLoading(true);    // Start loading
+    setError(null);      // Clear any previous error messages
+    setUserData(null);   // Clear previous user data
 
     try {
-      const data = await fetchUserData(username); // Fetch user data from GitHub API
-      setUserData(data); // Store fetched data in state
+      const data = await fetchUserData(username); // Call the API to fetch user data
+      setUserData(data); // Store the fetched data
     } catch (err) {
-      setError("Looks like we can't find the user"); // Set error message if the user is not found
+      // If an error occurs, set the error message
+      setError("Looks like we can't find the user");
     } finally {
-      setLoading(false); // Set loading to false once the request completes
+      setLoading(false); // End loading state
     }
   };
 
@@ -38,18 +39,18 @@ const Search = () => {
           type="text"
           placeholder="Search GitHub user"
           value={username}
-          onChange={handleInputChange}  // Update the username state as user types
+          onChange={handleInputChange}  // Update username state
         />
         <button type="submit">Search</button>
       </form>
 
-      {/* Loading state */}
+      {/* Show loading message while API call is in progress */}
       {loading && <p>Loading...</p>}
 
-      {/* Error message */}
-      {error && <p>{error}</p>}
+      {/* Show error message if no user is found */}
+      {error && <p>{error}</p>}  {/* This will display "Looks like we can't find the user" */}
 
-      {/* Display user data if available */}
+      {/* Show user data if fetched successfully */}
       {userData && (
         <div>
           <img src={userData.avatar_url} alt={userData.login} width="100" />
