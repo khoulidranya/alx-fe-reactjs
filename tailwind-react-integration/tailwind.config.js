@@ -1,8 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"], // Updated purge paths
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"], // Specify files to scan for classes
+  darkMode: "class", // Enable dark mode using the "class" strategy
   theme: {
-    extend: {}, // Add custom styles if needed
+    extend: {}, // Extend the default Tailwind theme if needed
   },
-  plugins: [], // Add Tailwind plugins if needed
+  variants: { // Explicitly define variants
+    extend: {}, // Extend variants for utilities (e.g., hover, focus)
+  },
+  plugins: [], // Add any Tailwind plugins here if needed
 };
