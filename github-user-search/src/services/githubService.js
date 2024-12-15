@@ -15,7 +15,7 @@ export const fetchUserData = async (username, location = '', minRepos = 0) => {
     }
 
     // Make the API request to search for users based on the query
-    const response = await axios.get(`https://api.github.com/search/users?${query}`);
+    const response = await axios.get(`https://api.github.com/search/users?q={query}`);
 
     // Return the data from the response
     return response.data.items; // This will be an array of user objects
