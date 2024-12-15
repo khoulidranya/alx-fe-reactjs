@@ -74,7 +74,7 @@ const AddRecipeForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 shadow-md">
         {/* Title Field */}
         <div>
           <label htmlFor="title" className="block text-lg font-medium mb-2">
