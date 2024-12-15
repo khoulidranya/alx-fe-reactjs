@@ -13,7 +13,7 @@ const PostsComponent = () => {
     return response.json();
   };
 
-  // Use React Query's useQuery hook to fetch data
+  // Use React Query's useQuery hook with default settings
   const { data, error, isLoading, isError, refetch } = useQuery('posts', fetchPosts);
 
   if (isLoading) return <div>Loading posts...</div>;
