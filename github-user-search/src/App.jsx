@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
-import SearchBar from './components/SearchBar';
-import fetchGitHubUser from './services/fetchGitHubUser';
+// App.jsx
 
-const App = () => {
-  const [userProfile, setUserProfile] = useState(null);
+import React, { useState } from 'react';
+import Search from './components/Search';
+import githubService from './services/githubService';
+
+function App() {
+  const [userData, setUserData] = useState(null);
 
   const handleSearch = async (username) => {
     try {
-      const userData = await fetchGitHubUser(username);
-      setUserProfile(userData);
+      const userData = await githubService.fetchUserData(username);
+      setUserData(userData);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
   };
 
   return (
-    <div>
+    <div className="App">
       <h1>GitHub User Search</h1>
-      <SearchBar onSearch={handleSearch} />
-      {userProfile && (
-        <div>
-          <h2>User Profile</h2>
-          <p>Name: {userProfile.name}</p>
-          <p>Username: {userProfile.login}</p>
-          {/* Add more profile details as needed */}
+      <Search onSearch={handleSearch} />
+      {userData && (
+        <div className="user-info">
+          <img src={userData.avatar_url} alt={userData.name} />
+          <h2>{userData.name}</h2>
+          <a href={userData.html_url}>View Profile</a>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default App;
