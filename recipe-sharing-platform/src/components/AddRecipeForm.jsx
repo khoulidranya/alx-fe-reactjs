@@ -4,50 +4,75 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [preparation, setPreparation] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+
+  // Validation function to check if form inputs are valid
+  const validate = () => {
+    const errors = {};
+    
+    // Check if title is empty
+    if (!title) {
+      errors.title = "Title is required";
+    }
+
+    // Check if ingredients are provided (at least 2)
+    if (!ingredients) {
+      errors.ingredients = "Ingredients are required";
+    } else {
+      const ingredientsArray = ingredients
+        .split("\n")
+        .map((ingredient) => ingredient.trim())
+        .filter((ingredient) => ingredient !== "");
+      if (ingredientsArray.length < 2) {
+        errors.ingredients = "Please provide at least two ingredients.";
+      }
+    }
+
+    // Check if preparation steps are empty
+    if (!preparation) {
+      errors.preparation = "Preparation steps are required";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple validation to check if all fields are filled
-    if (!title || !ingredients || !preparation) {
-      setError("All fields are required");
-      return;
+
+    // Validate form inputs before submission
+    if (!validate()) {
+      return; // If validation fails, don't submit
     }
 
-    // Split ingredients by newline and filter out empty entries
-    const ingredientsArray = ingredients
-      .split("\n")
-      .map((ingredient) => ingredient.trim())
-      .filter((ingredient) => ingredient !== "");
-
-    // Further validation (optional): Ingredients must have at least 2 items
-    if (ingredientsArray.length < 2) {
-      setError("Please provide at least two ingredients.");
-      return;
-    }
-
-    // If all validations pass, proceed to submit (for now, we just log the data)
+    // If validation passes, handle recipe submission (for now, log the data)
     const newRecipe = {
       title,
-      ingredients: ingredientsArray,
+      ingredients: ingredients.split("\n").map((ingredient) => ingredient.trim()).filter((ingredient) => ingredient !== ""),
       preparation,
     };
     console.log("New Recipe Submitted:", newRecipe);
-    
+
     // Reset form after submission
     setTitle("");
     setIngredients("");
     setPreparation("");
-    setError("");
+    setErrors({});
   };
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-6">Add New Recipe</h2>
       
-      {/* Error message */}
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+      {/* Error messages */}
+      {Object.keys(errors).length > 0 && (
+        <div className="text-red-500 text-center mb-4">
+          {Object.values(errors).map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title Field */}
