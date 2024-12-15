@@ -3,21 +3,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Search = () => {
+const Search = ({ onSearch }) => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
+    setError('');
 
     try {
       const response = await axios.get(`https://api.github.com/users/${inputValue}`);
-      // Handle the response here
+      onSearch(response.data);
     } catch (err) {
-      setError('Looks like we can't find the user');
+      setError('Looks like we can\'t find the user');
     } finally {
       setIsLoading(false);
     }
