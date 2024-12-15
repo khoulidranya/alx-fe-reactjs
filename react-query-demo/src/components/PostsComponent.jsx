@@ -13,8 +13,19 @@ const PostsComponent = () => {
     return response.json();
   };
 
-  // Use React Query's useQuery hook with default settings
-  const { data, error, isLoading, isError, refetch } = useQuery('posts', fetchPosts);
+  // Use React Query's useQuery hook with custom options
+  const {
+    data,
+    error,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery('posts', fetchPosts, {
+    cacheTime: 1000 * 60 * 10, // Cache data for 10 minutes
+    staleTime: 1000 * 60 * 5,  // Mark data as fresh for 5 minutes
+    refetchOnWindowFocus: false, // Disable refetching on window focus
+    keepPreviousData: true,     // Keep the previous data while fetching new data
+  });
 
   if (isLoading) return <div>Loading posts...</div>;
   if (isError) return <div>Error: {error.message}</div>;
@@ -34,6 +45,5 @@ const PostsComponent = () => {
     </div>
   );
 };
-
 
 export default PostsComponent;
