@@ -1,41 +1,28 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
 import Profile from "./components/Profile";
-import ProfileDetails from "./pages/ProfileDetails";
-import ProfileSettings from "./pages/ProfileSettings";
-import BlogPost from "./pages/BlogPost";
-import ProtectedRoute from "./components/ProtectedRoute";
-import NotFound from "./pages/NotFound";
+import BlogPost from "./components/BlogPost";
+import ProfileDetails from "./components/ProfileDetails";
+import ProfileSettings from "./components/ProfileSettings";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/* Public Route */}
+        {/* Home Route */}
         <Route path="/" element={<Home />} />
 
-        {/* Dynamic Route */}
-        <Route path="/blog/:postId" element={<BlogPost />} />
-
-        {/* Protected Route */}
-        <Route 
-          path="/profile/*" 
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        >
-          {/* Nested Routes within Profile */}
+        {/* Profile Routes with Nested Routes */}
+        <Route path="profile" element={<Profile />}>
           <Route path="details" element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
         </Route>
 
-        {/* Catch-All Route */}
-        <Route path="*" element={<NotFound />} />
+        {/* Dynamic Route for Blog Post */}
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
