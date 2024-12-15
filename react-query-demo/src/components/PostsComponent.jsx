@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useQuery } from 'react-query';
-import { fetchPosts } from '../queries/posts'; // Import the fetch function
+import { fetchPosts } from '../queries/posts'; // Import fetch function from queries
 
 const PostsComponent = () => {
   // Use React Query's useQuery hook to fetch data
