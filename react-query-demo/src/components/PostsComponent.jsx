@@ -35,4 +35,5 @@ const PostsComponent = () => {
   );
 };
 
+
 export default PostsComponent;
