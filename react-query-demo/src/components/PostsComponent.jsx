@@ -1,8 +1,11 @@
+// src/components/PostsComponent.jsx
+
 import React from 'react';
 import { useQuery } from 'react-query';
-import { fetchPosts } from '../queries/posts'; // Optional: modularized fetching
+import { fetchPosts } from '../queries/posts'; // Import the fetch function
 
 const PostsComponent = () => {
+  // Use React Query's useQuery hook to fetch data
   const { data, error, isLoading, isError, refetch } = useQuery('posts', fetchPosts);
 
   if (isLoading) return <div>Loading...</div>;
