@@ -10,10 +10,10 @@ const UserProfile = () => {
           className="rounded-full w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover border-2 border-gray-300"
         />
       </div>
-      <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-2 sm:mb-4">
+      <h1 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">
         John Doe
       </h1>
-      <p className="text-sm sm:text-base md:text-lg text-gray-600 text-center">
+      <p className="text-sm sm:text-base md:text-xl text-gray-600 text-center">
         Hi there! I’m a web developer passionate about crafting responsive and engaging user interfaces. Let’s build something amazing together.
       </p>
     </div>
