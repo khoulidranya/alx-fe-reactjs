@@ -7,7 +7,7 @@ const UserProfile = () => {
         <img
           src="https://via.placeholder.com/150"
           alt="User Profile"
-          className="rounded-full w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover border-2 border-gray-300"
+          className="rounded-full w-24 h-24 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover border-2 border-gray-300"
         />
       </div>
       <h1 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900 mb-2 sm:mb-4">
