@@ -1,24 +1,28 @@
-// src/components/UserProfile.jsx
+import React from "react";
 
-import React from 'react';
-
-function UserProfile() {
+const UserProfile = () => {
   return (
-    
-    <div className="user-profile bg-gray-100 p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm mx-auto my-10 md:my-20 rounded-lg shadow-lg">
-      <img
-        src="https://via.placeholder.com/150"
-        alt="User"
-        className="rounded-full w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 mx-auto"
-      />
-      <h1 className="text-lg sm:text-xl md:text-2xl text-blue-800 my-4 text-center">
+    <div className="flex flex-col items-center p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto bg-white shadow-lg rounded-lg">
+      {/* Profile Image */}
+      <div className="mb-4">
+        <img
+          src="https://via.placeholder.com/150"
+          alt="User Profile"
+          className="rounded-full w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover"
+        />
+      </div>
+
+      {/* Heading */}
+      <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-2">
         John Doe
       </h1>
+
+      {/* Paragraph */}
       <p className="text-sm sm:text-base md:text-lg text-gray-600 text-center">
-        Developer at Example Co. Loves to write code and explore new technologies.
+        A passionate web developer who enjoys building responsive and user-friendly web applications.
       </p>
     </div>
   );
-}
+};
 
 export default UserProfile;
